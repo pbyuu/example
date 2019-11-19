@@ -1,0 +1,89 @@
+extends layout
+
+//-编译：jade .\views\index.jade进行编译
+//-监控：采用jade demo.jade -P -w，监控我们的jade，一有改变自动编译成html
+block content
+    //-h1=title  和 h1 #{title} 等效
+    h1 #{title}
+
+    //-class与id设定：div.a#b 代表 <div class='a' id='b></div>
+    p Welcome to #{title}
+
+    //-缩进：jade采取的是缩进的方式来确定其关系，并且无论是需要闭合的标签还是单个标签都是用其标签名即可
+    br
+
+    //-属性：除了class和id，其余属性都要在括号内设定
+    a(href="http://www.baidu.com.cn") link
+
+    //-换行：两种换行方式如下
+    p
+        | 换行方式1
+        strong 1
+    p(style="color:red;").
+        换行方式2
+    //-. 除了用于换行，还可以用于写内嵌样式、内嵌脚本    （点之前写标签、样式等，点之后写标签内容）
+    style.
+        body {
+            color:gray;
+        }
+
+    //-注释：注释分两种，只有双斜杠的注释会被编译到代码，双斜杠加"-"不会被编译
+    
+    //-变量声明：jade声明的变量优先级高于外面传入的
+    - var test = "okkk1234";
+    - var test2 = "<span>abc</span>";
+    //-变量使用：1.#{} 和 = 一样   2. !{} 和 != 一样  3.{}内支持js语发 4.对于为负值的变量，全都显示空(本人实践所得，和教程不一样) 5.需要在网页上输出#{}和!{}时，采用\#{}和\!{}
+    p #{test2} //显示test2原文
+    p=test2
+    p !{test2} //test2被编译
+    p!=test2
+    p \#{test2} //显示p后面的文字内容，不把test2作为变量
+    p \!{test2}
+    p #{test.toLocaleUpperCase()}
+
+    //-流程控制：jade支持js原生的流程控制语句，如遍历对象属性时的for...in，遍历数组时的for，进行判断时的if...else
+    - var arr = [1,2,3,4];
+    ul
+        - for(var i = 0; i<arr.length;i++)
+            li #{arr[i]}
+    - var n = 0;
+    ul
+        - while(n<4)
+            li=n
+            - n = n+1
+    - if(arr.length<4)
+        p length<1
+    - else
+        p length>=4
+    //-jade提供的语法：each来遍历对象或者数组； unless进行条件判断，unless(x) = if (!x)；case when来实现js原生的switch
+    - var obj = {x:1,y:2,z:3};
+    //-注意 each、unless、case when 相当于保留字，不需要加- ； if、else也不需要
+    each val,key in obj
+        p #{key}:#{val}
+    if(arr.length<4)
+        p length<1
+    else
+        p length>=4
+
+    //-mixin：定义公共代码（类似于函数）。在某些情况下，代码可能经常会重用，就像函数一样，mixin就是为了解决这一问题
+    mixin test
+        p test mixin_block
+        a(href="http://www.baidu.com") link
+    +test
+    //-既然说了像函数一样，那么它肯定也可以带有参数
+    mixin testFunc(name,course)
+        p #{name} is a student, there are his lessons:
+        ul
+            each val,key in course
+                li #{key}.#{val}
+    +testFunc("peter",{"1":"语文","2":"数学","3":"英语"})
+    //-mixin 还有其他很多用处，这里不赘述 ，详情见https://segmentfault.com/a/1190000006149993
+
+    //-模板继承：用extends进行模板继承  被继承模板中的block，不管有没有内容，会被本文件的block覆盖
+    block item
+        p a item in index.jade
+
+    //-include:既可以引入.jade，也可以引入.html文件  (可以把页面分块组件化，然后用include引入，便于维护页面)
+    include ./part.jade
+
+    //-此外还有jade与后台交互的一些方法，详见http://www.imooc.com/learn/259
