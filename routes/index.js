@@ -1,5 +1,5 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -7,8 +7,8 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/demo',function (req,res,next) {
-  var demo = "demo";
+  const demo = "demo";
   res.render("index_demo",{title:demo});
-})
+});
 
 module.exports = router;

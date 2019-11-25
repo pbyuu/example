@@ -1,9 +1,12 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');  /*Morgan是一个node.js关于http请求的日志中间件*/
-
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');  /*Morgan是一个node.js关于http请求的日志中间件*/
+const log4js = require('log4js');
+const log = require('./config/logger');
+const lessMiddleware = require('less-middleware');
+const bodyParser = require('body-parser');
 /*
 require
 
@@ -14,7 +17,7 @@ Node.js会根据 require的是相对路径还是非相对路径做出不同的�
 一、相对路径
   相对路径很简单。 例如，假设有一个文件路径为 /root/src/moduleA.js，包含了一个导入
 
-  var x = require("./moduleB");
+  const x = require("./moduleB");
   Node.js以下面的顺序解析这个导入：
 
   1.检查/root/src/moduleB.js文件是否存在。
@@ -30,10 +33,10 @@ Node.js会根据 require的是相对路径还是非相对路径做出不同的�
 */
 
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
 
-var app = express(); //创建一个Express应用程序。该express()函数是express模块导出的顶级函数。
+const app = express(); //创建一个Express应用程序。该express()函数是express模块导出的顶级函数。
 
 /*
   __dirname 总是指向被执行 js 文件的绝对路径
@@ -47,19 +50,20 @@ app.set('view engine', 'jade');
 /*
 使用app.use(logger('dev'));可以将请求信息打印在控制台，便于开发调试，但实际生产环境中，需要将日志记录在log文件里，可以使用如下代码
 
-var express = require('express');
-var fs = require('fs');
-var logger = require('morgan');
+const express = require('express');
+const fs = require('fs');
+const logger = require('morgan');
 
-var app = express();
+const app = express();
 
-var accessLog = fs.createWriteStream('../access.log', {flags : 'a'});
-var errorLog = fs.createWriteStream('../error.log', {flags : 'a'});
+const accessLog = fs.createWriteStream('../access.log', {flags : 'a'});
+const errorLog = fs.createWriteStream('../error.log', {flags : 'a'});
 
 app.use(logger('dev'));		//打印到控制台
 app.use(logger('combined', {stream : accessLog}));
 */
 app.use(logger('dev'));
+//app.use(log4js.connectLogger(log,{level:'auto'}));
 
 //body-parser中间件底层中间件用法：这将拦截和解析所有的请求；也即这种用法是全局的。
 app.use(express.json());//等于bodyParser.json()，处理json数据
@@ -101,6 +105,7 @@ app.get('/reg', function (req, res) {
 
 });*/
 
+
 /*
 express响应中用到常用三种API：
     res.send()
@@ -128,7 +133,7 @@ app.use(function(req, res, next) {
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function(err, req, res) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
