@@ -29,4 +29,8 @@ router.get('/demoData',function (req,res,next) {
   });
 });
 
+router.get("/demo3",function (req,res,next) {
+  const demo = "demo";
+  res.render("error_demo",{title:demo});
+});
 module.exports = router;
