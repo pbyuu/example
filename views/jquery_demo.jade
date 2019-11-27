@@ -1,0 +1,21 @@
+extends ./layout
+block content
+    p.p1 p1
+    //p.p1 p2
+    table
+        tbody
+            tr.tr1#red
+                th#th1 month
+                th days
+            tr.tr2#blue
+                td 1
+                td 100
+            tr.tr3#green
+                td 2
+                td 200
+    form
+        input#email(name="email" type="text")
+    a(id="c" href="#0") click
+    div#result
+    script(src="/javascripts/jquery-1.9.1.min.js")
+    script(src="/javascripts/jquery_demo.js")

@@ -8,7 +8,25 @@ router.get('/', function(req, res, next) {
 
 router.get('/demo',function (req,res,next) {
   const demo = "demo";
-  res.render("index_demo",{title:demo});
+  res.render("js_demo",{title:demo});
+});
+
+router.get('/demo2',function (req,res,next) {
+  res.render("jquery_demo",{title:"demo2"});
+});
+
+router.get('/demoData',function (req,res,next) {
+  let name = req.query.name;
+  if (name===undefined||name===''){
+    name = 'abc';
+  }
+  return res.json({
+    'a':1,
+    'b':2,
+    'c':3,
+    'd':4,
+    'name':name
+  });
 });
 
 module.exports = router;

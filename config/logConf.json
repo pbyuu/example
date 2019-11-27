@@ -5,12 +5,6 @@
     },
     "stdout": {
       "type": "stdout"
-    },
-    "production": {
-      "type": "dateFile",
-      "filename": "./logs/",
-      "alwaysIncludePattern": true,
-      "pattern": "SNSWeb-yyyy-MM-dd.log"
     }
   },
   "categories": {

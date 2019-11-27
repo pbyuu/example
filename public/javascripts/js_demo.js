@@ -1,3 +1,17 @@
+/*
+&&运算
+结果为true，那么会返回的会是第二个为真的值；如果结果为false，返回的会是第一个为假的值
+
+||运算
+结果为true，会返回第一个为真的值；如果结果为false，会返回第二个为假的值
+
+var1 && var2 || var3
+如果var1和var2都为假，返回var3
+
+if(var)  //如果var 等于 null/NaN/undefined/''/""/false/0，判断结果都为false   []\{}\new Array()\1\" "都是true
+ */
+
+
 //Array()
 let arr = [1,'a','hello',1.2];
 
