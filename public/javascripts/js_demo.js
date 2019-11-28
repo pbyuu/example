@@ -250,7 +250,7 @@ document.getElementById("ul1").insertBefore(orange,document.getElementById("blue
 /*回调函数
 reader.readAsDataURL(file);
 reader.onload = function(e) {
-    // 当文件读取完成后，自动调用此函数:
+    // 当文件读取完成后，自动调用此函数
 };*/
 
 /*
@@ -279,4 +279,16 @@ Promise还可以做更多的事情，比如，有若干个异步任务，需要�
 要串行执行这样的异步任务，不用Promise需要写一层一层的嵌套代码。有了Promise，我们只需要简单地写：
 job1.then(job2).then(job3).catch(handleError);
  */
+
+//处理错误    用try ... catch ... finally
+//异步操作的错误无法被捕获
+/*function printTime() {
+    console.log('It is time!');
+}
+
+setTimeout(printTime, 1000);
+console.log('done');*/
+/*
+上面的代码会先打印done，1秒后才会打印It is time!。
+如果printTime()函数内部发生了错误，我们试图用try包裹setTimeout()是无效的*/
 

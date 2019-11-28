@@ -1,9 +1,24 @@
 const express = require('express');
 const router = express.Router();
+const test1 = require('../modules/module1');
+const test2 = require('../modules/module2');
+
+/*
+基本模块：
+global    全局变量
+process    Node.js当前进程
+ */
+router.get('/',function (req,res,next) {
+  return res.json("end");
+});
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/index', function(req, res, next) {
   res.render('index', { title: 'Express' });
+});
+
+router.get('/jadeDemo', function(req, res, next) {
+  res.render('jade_demo', { title: 'jade_demo' });
 });
 
 router.get('/demo',function (req,res,next) {
@@ -27,10 +42,5 @@ router.get('/demoData',function (req,res,next) {
     'd':4,
     'name':name
   });
-});
-
-router.get("/demo3",function (req,res,next) {
-  const demo = "demo";
-  res.render("error_demo",{title:demo});
 });
 module.exports = router;

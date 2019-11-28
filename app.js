@@ -22,7 +22,7 @@ Node.js会根据 require的是相对路径还是非相对路径做出不同的�
 
   1.检查/root/src/moduleB.js文件是否存在。
   2.检查/root/src/moduleB目录是否包含一个package.json文件，且package.json文件指定了一个"main"模块。
-  在我们的例子里，如果Node.js发现文件 /root/src/mod      uleB/package.json包含了{ "main": "lib/mainModule.js" }，那么Node.js会引用/root/src/moduleB/lib/mainModule.js。
+  在我们的例子里，如果Node.js发现文件 /root/src/moduleB/package.json包含了{ "main": "lib/mainModule.js" }，那么Node.js会引用/root/src/moduleB/lib/mainModule.js。
   3.检查/root/src/moduleB目录是否包含一个index.js文件。 这个文件会被隐式地当作那个文件夹下的"main"模块。
 
 二、非相对路径
@@ -30,6 +30,10 @@ Node.js会根据 require的是相对路径还是非相对路径做出不同的�
   Node会在一个特殊的文件夹 node_modules里查找你的模块。
   node_modules可能与当前文件在同一级目录下，或者在上层目录里。
   Node会向上级目录遍历，查找每个 node_modules直到它找到要加载的模块。
+
+其他模块暴露的是变量
+这种模块加载机制被称为CommonJS规范。这种规范下，moduleA引用moduleB时，它们内部各自使用的变量名和函数名都互不冲突，各用各的
+如果想用其他模块的变量，需要将变量暴露出来
 */
 
 
