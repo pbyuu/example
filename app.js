@@ -133,6 +133,7 @@ app.use('/users', usersRouter);
 //访问其他路径出错时，错误处理
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
+  log.error('获取文件出错:'+req.url);
   next(createError(404));
 });
 
@@ -148,3 +149,8 @@ app.use(function(err, req, res) {
 });
 
 module.exports = app;
+
+/*
+npm其实是Node.js的包管理工具
+把函数分组，放到不同文件中。在Node环境中，一个.js文件就称之为一个模块（module）
+*/

@@ -1,4 +1,21 @@
-/*
-npm其实是Node.js的包管理工具
-把函数分组，放到不同文件中。在Node环境中，一个.js文件就称之为一个模块（module）
-*/
+var data = {};
+
+$('#container').render({
+	data: {
+		lib: "thin.js",
+		author: "eprom2006"
+	},
+	template: [
+		{
+			e: "div",
+			t: "data:"
+		},
+		{
+			e:"div",
+			t:{
+				e:"div",
+				data:data,
+			}
+		}
+	]
+});
