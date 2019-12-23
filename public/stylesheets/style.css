@@ -2,14 +2,87 @@
 .marked p{ }: 为所有 class="marked" 元素内的 p 元素指定一个样式。
 p.marked{ }: 为所有 class="marked" 的 p 元素指定一个样式。*/
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    padding: 50px;
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a {
-  color: #00B7FF;
+    color: #00B7FF;
 }
 
 * {
-  margin-top: 5px;
+    margin-top: 0px;
+}
+
+ul {
+    padding-inline-start: 0px;
+    /*margin:0 auto;*/
+}
+
+li {
+    list-style-type: none;
+}
+
+.head_tab {
+    width: 128px;
+    font-size: 16px;
+    display: block;
+    text-align: left;
+    border: 1px solid #cccccc;
+    float: left;
+}
+
+.head_tab li {
+    /*float:left;  横排显示*/
+    line-height: 20px;
+    text-align: left;
+    padding-left: 10px;
+}
+
+.head_tab .active {
+    background: #cccccc;
+}
+
+.page_container {
+    margin-left: 158px;
+    border-left: 1px solid #cccccc;
+    min-height: 300px;
+    padding-left: 20px;
+    /*clear: both;*/
+}
+
+.list_btn{
+    width: 80px;
+    height: 30px;
+    background-color: #417dc9;
+    color: #fff;
+    line-height: 30px;
+    text-align: center;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    border-radius: 5%;
+}
+
+.search_div{
+
+}
+
+.result_table{
+    /*border-left:1px solid ;
+    border-top:1px solid ;*/
+    margin-top: 20px;
+}
+
+th, td{
+   /* border-right: 1px solid;
+    border-bottom: 1px solid ;*/
+    padding:5px 15px;
+    background: #ffffff;
+}
+
+table{
+    border-collapse: separate;
+    border-spacing: 1px;
+    background: #cccccc;
 }

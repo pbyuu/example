@@ -33,7 +33,10 @@ map.get('c');
 //set()
 let s = new Set([1,2,3]);
 s.add(4);*/
+for(var i = 0;i<5;i++){
 
+}
+console.log(i);//i = 5, 使用var,for里定义i等同于在外部定义i;如果改成let，i只在for内起作用，在外部是没定义的，会报not defined
 //for ... of循环是ES6引入的新的语法
 let a = [1,2,3];
 for(let num in a){

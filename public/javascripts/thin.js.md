@@ -124,10 +124,34 @@ click事件处理函数
 1. 当data是数组时，根模板中的串模板数据选择器无效。
 2. ？
 
+## Render
+渲染器
 
+        $(selector).render({
+          data:data,
+          template:template
+        });
 
+## poplayer
+浮层渲染器
 
+        poplayer({
+            data:data,
+            template:template
+        })
+        
+## tab 
+标签导航
 
-## 2. poplayer
-## 3. tab
-## 4. multiview
+        <tab>
+            <tab-nav>item1</tab-nav>
+            <tab-nav>item2</tab-nav>
+        <tab>
+        
+## multiview
+多视图
+
+        <multiview>
+            <view>view 1</view>
+            <view>view 2</view>
+        </multiview>

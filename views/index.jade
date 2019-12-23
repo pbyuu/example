@@ -1,7 +1,10 @@
 extends layout
 
 block content
-    div#container
 
-    script(src='/javascripts/index.js')
+    tab#main
+    div#container
+    script $(example.views.index);//js代码在layout文件里已经引入了，这里其实是在绑定函数 类似于$(function () {}); 当页面载入后触发
+
+
 

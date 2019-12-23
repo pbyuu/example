@@ -133,7 +133,7 @@ app.use('/users', usersRouter);
 //访问其他路径出错时，错误处理
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  log.error('获取文件出错:'+req.url);
+  log.error('访问出错 url:'+req.url+" req:"+req+" res:"+res);
   next(createError(404));
 });
 
