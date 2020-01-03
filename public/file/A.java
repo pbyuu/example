@@ -1,5 +1,6 @@
 public class A {
     public static void main(String[] args){
+        //todo 3.复选框及数据，两个复选框分开处理，不必统一代码生成  4.分版期刊、合作情况  5.view和填写是一个模板
         String[] arr =new String[]{
                 "#####基础信息","",
                 "曾用刊名","former_name",
@@ -120,10 +121,11 @@ public class A {
                 "省(区、市)级荣誉数量","honor_prov_num",
                 "行业专业级荣誉名称","honor_industry",
                 "行业专业级荣誉数量","honor_industry_num",
-                "本年度单位及人员受处罚情况事由及处理结果：可包括多行","punishment",//todo ：可包括多行,每行的内容
-
-                "领导班子情况登记表：可包括多行","leaders",
-                "采编工作人员情况登记表：可包括多行","workers",
+                "本年度单位及人员受处罚情况事由及处理结果","punishment",
+                "领导班子情况登记表","",
+                "领导班子情况：可包括多行【姓名、性别、年龄、职务、政治面貌、文化程度、技术职称、岗位培训合格证书、固定电话、移动电话、身份、是否主管主办单位任命】[name/gender/age/position/political/edu_level/tech_title/certificate/fixed_phone/telephone/identity/appoint]","leaders",
+                "采编工作人员情况登记表","",
+                "采编工作人员情况：可包括多行【姓名、性别、年龄、职务、政治面貌、文化程度、职称、岗位性质、新闻记者证编号、出版专业职业资格证书编号】[name/gender/age/position/political/edu_level/title/job_nature/card_num/pro_num]","workers",
 
                 "#####出版能力","",
                 "年度出版期数(期)","annual_publish_num",
@@ -176,61 +178,118 @@ public class A {
                 "纳税总额(万元)","tax",
 
                 "是否存在多个版本：单选框【是/否】。选中“是”后，显示【分版情况】","is_multi_ver",//todo
-                "分版情况：可包括多行","multi_ver",
+                "分版情况","",
+                "分版情况：可包括多行【版本名称、邮发代号（如无可不填写）】[version_name/mail_code]","multi_ver",
                 "是否与其他单位合作：单选框【是/否】。选中“是”后，显示【合作情况】","is_coop",
-                "合作情况：可包括多行","coop"};
+                "合作情况","",
+                "合作情况：可包括多行【合作单位名称、合作领域、合作方式、收益分配比例】[unit_name/field/mode/proportion]","coop"};
 
-        for(int i = 0;i<arr.length;i=i+2){
-            if (arr[i].startsWith("#####")&&arr[i].contains("基础信息")){
-                System.out.println("{e: \"fieldset\",\n" + "\tt:[{e: \"legend\", t: \""+arr[i].substring(5)+"\"},");
-            }
-            else if (arr[i].startsWith("#####")){
-                System.out.println("]},\n{e: \"fieldset\",\n" + "\tt:[{e: \"legend\", t: \""+arr[i].substring(5)+"\"},");
-            }
-            //处理单选框
-            else if (arr[i].contains("单选框")){
-                //制作出selector
-                String selector = arr[i].substring(arr[i].indexOf("【"),arr[i].indexOf("】"));
-                selector = selector.replace("【","");
-                String[] selectorArr = selector.split("/");
-                String a = "";
-                for(String s:selectorArr){
-                    a+="\""+s+"\",";
-                }
-                a = a.substring(0,a.length()-1);
-                //请注明
-                if (arr[i].contains("$$$")){
-                    String item = "";
-                    String display = "";
-                    if (arr[i].contains("其他（请注明）")){
-                        item = "其他（请注明）";
-                        display = ", style: {\"display\": \"none\"}";
-                    }else if(arr[i].contains("有（请注明）")){
-                        item = "有（请注明）";
-                    }
-                    System.out.println("{\n" +
-                            "\t\t\t\t\t\t\te: \"f1\", style:{width:\"550px\"}, t: [{e: \"label\", t: \""+arr[i].substring(0,arr[i].indexOf("：单"))+"\"}, {e: \"select\", name: \""+arr[i+1]+"\", t: function (selectEle) {appendOption(selectEle, ["+a+"]);},\n" +
-                            "\t\t\t\t\t\t\t\tevent: {\n" +
-                            "\t\t\t\t\t\t\t\t\tchange: function (selectEle) {\n" +
-                            "\t\t\t\t\t\t\t\t\t\tvar detail = $(selectEle.sender).parent().find(\"input\");\n" +
-                            "\t\t\t\t\t\t\t\t\t\tif (selectEle.new_data."+arr[i+1]+" === \""+item+"\") {detail.css(\"display\", \"inline\");} else {detail.css(\"display\", \"none\");}\n" +
-                            "\t\t\t\t\t\t\t\t\t}}},\n" +
-                            "\t\t\t\t\t\t\t{e: \"input\", name: \""+arr[i+1]+"_detail\", a: {\"placeholder\": \"请填入具体信息\"}"+display+"}]\n" +
-                            "\t\t\t\t\t\t},");
-                }else {
-                    System.out.println("{e: \"f1\", t: [{e: \"label\", t: \""+arr[i].substring(0,arr[i].indexOf("：单"))+"\"}, {e: \"select\", name: \""+arr[i+1]+"\",t: function (selectEle){appendOption(selectEle, ["+a+"]);}}]},");
 
-                }
-                            }
-            //处理分开legend
-            else if(arr[i+1].equals("")){
-                System.out.println("{e: \"legend\", t: \""+arr[i]+"\"},");
-            }
-            else{
-                System.out.println("{e: \"f1\", t: [{e: \"label\", t: \""+arr[i]+"\"}, {e: \"input\", name: \""+arr[i+1]+"\"}]},");
-            }
+     }
 
-        }
-        System.out.println("]}");
+     //打印
+     public void print(String[] arr){
+         for(int i = 0;i<arr.length;i=i+2){
+             if (arr[i].startsWith("#####")&&arr[i].contains("基础信息")){
+                 System.out.println("{e: \"fieldset\",\n" + "\tt:[{e: \"legend\", t: \""+arr[i].substring(5)+"\"},");
+             }
+             else if (arr[i].startsWith("#####")){
+                 System.out.println("]},\n{e: \"fieldset\",\n" + "\tt:[{e: \"legend\", t: \""+arr[i].substring(5)+"\"},");
+             }
+             //处理单选框
+             else if (arr[i].contains("单选框")){
+                 //制作出selector
+                 String selector = arr[i].substring(arr[i].indexOf("【")+1,arr[i].indexOf("】"));
+                 String[] selectorArr = selector.split("/");
+                 String a = "";
+                 for(String s:selectorArr){
+                     a+="\""+s+"\",";
+                 }
+                 a = a.substring(0,a.length()-1);
+                 //请注明
+                 if (arr[i].contains("$$$")){
+                     String item = "";
+                     String display = "";
+                     if (arr[i].contains("其他（请注明）")){
+                         item = "其他（请注明）";
+                         display = ", style: {\"display\": \"none\"}";
+                     }else if(arr[i].contains("有（请注明）")){
+                         item = "有（请注明）";
+                     }
+                     System.out.println("{\n" +
+                             "\t\t\t\t\t\t\te: \"f1\", style:{width:\"550px\"}, t: [{e: \"label\", t: \""+arr[i].substring(0,arr[i].indexOf("：单"))+"\"}, {e: \"select\", name: \""+arr[i+1]+"\", t: function (selectEle) {appendOption(selectEle, ["+a+"]);},\n" +
+                             "event: {\n" +
+                             "\tchange: function (selectEle) {\n" +
+                             "\t\tvar detail = $(selectEle.sender).parent().find(\"input\");\n" +
+                             "\t\tif (selectEle.new_data."+arr[i+1]+" === \""+item+"\") {detail.css(\"display\", \"inline\");} else {detail.css(\"display\", \"none\");}\n" +
+                             "\t}}},\n" +
+                             "\t\t\t\t\t\t\t{e: \"input\", name: \""+arr[i+1]+"_detail\", a: {\"placeholder\": \"请填入具体信息\"}"+display+"}]\n" +
+                             "\t\t\t\t\t\t},");
+                 }else {
+                     System.out.println("{e: \"f1\", t: [{e: \"label\", t: \""+arr[i].substring(0,arr[i].indexOf("：单"))+"\"}, {e: \"select\", name: \""+arr[i+1]+"\",t: function (selectEle){appendOption(selectEle, ["+a+"]);}}]},");
+
+                 }
+
+             }
+             //处理可包括多行
+             else if(arr[i].contains("可包括多行")){
+                 String a = "";
+                 String b = "";
+                 String c = "";
+                 if (arr[i].contains("【")){
+                     String names = arr[i].substring(arr[i].indexOf("【")+1,arr[i].indexOf("】"));
+                     String[] nameArr = names.split("、");
+                     for(String s:nameArr){
+                         a+="<th>"+s+"</th>";
+                     }
+                 }
+                 if (arr[i].contains("[")){
+                     String names = arr[i].substring(arr[i].indexOf("[")+1,arr[i].indexOf("]"));
+                     String[] nameArr = names.split("/");
+                     for(String s:nameArr){
+                         b+="<td><input name='"+arr[i+1]+"."+s+"'></td>";
+                         c +="<td><input name=\""+arr[i+1]+"."+s+"\"></td>";
+                     }
+                 }
+
+                 if (arr[i].contains("【")){
+                     System.out.println("{\n" +
+                             "\t\te: \"table\",\n" +
+                             "\t\tt: [{\n" +
+                             "\t\t\te: \"tr\",\n" +
+                             "\t\t\tt: [\n" +
+                             "\t\t\t\t\""+a+"\"\n" +
+                             "\t\t\t]\n" +
+                             "\t\t},\n" +
+                             "\t\t\t{\n" +
+                             "\t\t\t\te: \"tr\",\n" +
+                             "\t\t\t\tt: [\""+b+"\"],\n" +
+                             "\t\t\t},\n" +
+                             "\t\t\t{e:\"button\",t:\"+\",click:function(plusEle){$(plusEle.sender).before('<tr>"+c+"</tr>');}},\n" +
+                             "\t\t\t{e:\"button\",t:\"-\",click:function(deleteEle){if($(deleteEle.sender).parent().find(\"tr\").length>1){$(deleteEle.sender).prev().prev(\"tr\").remove();}}}\n" +
+                             "\t\t]\n" +
+                             "\t},");
+                 }
+                 else{
+                     System.out.println("{e: \"dl\",\n" +
+                             "\t\tt: [{e: \"dt\", t: \""+arr[i].substring(0,arr[i].indexOf("："))+"\"},\n" +
+                             "\t\t\t{e:\"dd\",t:[{e: \"input\", name: \""+arr[i+1]+"\"},]},\n" +
+                             "\t\t\t{e:\"button\",t:\"+\",click:function(plusEle){$(plusEle.sender).before('<dd><input name=\""+arr[i+1]+"\"/></dd>');}},\n" +
+                             "\t\t\t{e:\"button\",t:\"-\",click:function(deleteEle){$(deleteEle.sender).prev().prev(\"dd\").remove();}}\n" +
+                             "\t\t\t]\n" +
+                             "\t},");
+                 }
+
+             }
+             //处理分开legend
+             else if(arr[i+1].equals("")){
+                 System.out.println("{e: \"legend\", t: \""+arr[i]+"\"},");
+             }
+             else{
+                 System.out.println("{e: \"f1\", t: [{e: \"label\", t: \""+arr[i]+"\"}, {e: \"input\", name: \""+arr[i+1]+"\"}]},");
+             }
+
+         }
+         System.out.println("]}");
      }
 }
