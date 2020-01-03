@@ -1,10 +1,7 @@
-import java.lang.reflect.Array;
-
 public class A {
     public static void main(String[] args){
         String[] arr =new String[]{
                 "#####基础信息","",
-                "期刊名称","",
                 "曾用刊名","former_name",
                 "页码","page_num",
                 "增刊期数","supplement",
@@ -79,7 +76,6 @@ public class A {
                 "总人数","total_people",
                 "在编人数：在编人数+聘用人数=总人数，不等时提示","company_employ_num",
                 "聘用人数：同上","employ_num",
-                "不同岗位人数--","",
                 "采编工作人员：根据采编登记表自动填写","num_b1",
                 "新媒体工作人员","num_b2",
                 "行政服务人员","num_b3",
@@ -87,17 +83,14 @@ public class A {
                 "发行工作人员","num_b5",
                 "其他人员","num_b6",
                 "混岗情况说明","job_mix",
-                "不同学历人数--","",
                 "博士学历人数","num_c1",
                 "硕士学历人数","num_c2",
                 "本科学历人数","num_c3",
                 "大专及以下学历人数","num_c4",
-                "不同职称人数--","",
                 "正高职称人数","num_d1",
                 "副高职称人数","num_d2",
                 "中级职称人数","num_d3",
                 "初级及无职称人数","num_d4",
-                "不同政治面貌人数--","",
                 "中共党员人数","num_e1",
                 "共青团员人数","num_e2",
                 "民主党派人数","num_e3",
@@ -114,7 +107,7 @@ public class A {
                 "行业专业级专项经费(万元)","industry_support",
                 "省(区、市)级专项经费(万元)","prov_support",
                 "其他专项经费(万元)","other_support",
-                "本年度本刊组织开展的主要评比、表彰、人物评选等情况--","",
+                "本年度本刊组织开展的主要评比、表彰、人物评选等情况","",
                 "本年度单位及人员所获荣誉情况","honor",
                 "国家级荣誉名称：可包括多行","honor_na",
                 "省(区、市)级荣誉名称：可包括多行","honor_prov",
@@ -144,8 +137,7 @@ public class A {
                 "海外版本名称：可包括多行","overseas_ver",
                 "海外机构名称：可包括多行","overseas_org_name",
 
-                "#####学术期刊出版有关情况","",
-                "学术情况出版有关情况（仅学术期刊填写）--","",
+                "#####学术情况出版有关情况（仅学术期刊填写）","",
                 "年度收文量","annual_receipts",
                 "年度发文量","annual_volume",
                 "开放获取情况：单选框【否/部分论文/全部论文】","open_access",
@@ -178,12 +170,10 @@ public class A {
 
         for(int i = 0;i<arr.length;i=i+2){
             if (arr[i].startsWith("#####")&&arr[i].contains("基础信息")){
-                System.out.println("{e: \"legend\", t: \""+arr[i].substring(5)+"\"},");
+                System.out.println("{e: \"fieldset\",\n" + "\tt:[{e: \"legend\", t: \""+arr[i].substring(5)+"\"},");
             }
             else if (arr[i].startsWith("#####")){
-                System.out.println("]},{\n" +
-                        "\t\t\t\t\t\te: \"fieldset\",\n" +
-                        "\t\t\t\t\t\tt:[{e: \"legend\", t: \""+arr[i].substring(5)+"\"},");
+                System.out.println("]},\n{e: \"fieldset\",\n" + "\tt:[{e: \"legend\", t: \""+arr[i].substring(5)+"\"},");
             }
             else if (arr[i].contains("单选框")){
                 String selector = arr[i].substring(arr[i].indexOf("【"),arr[i].indexOf("】"));
@@ -195,9 +185,15 @@ public class A {
                 }
                 a = a.substring(0,a.length()-1);
                 System.out.println("{e: \"f1\", t: [{e: \"label\", t: \""+arr[i].substring(0,arr[i].indexOf("：单"))+"\"}, {e: \"select\", name: \""+arr[i+1]+"\",t: function (selectEle){appendOption(selectEle, ["+a+"]);}}]},");
-            }else{
+            }
+            else if(arr[i+1].equals("")){
+                System.out.println("{e: \"legend\", t: \""+arr[i]+"\"},");
+            }
+            else{
                 System.out.println("{e: \"f1\", t: [{e: \"label\", t: \""+arr[i]+"\"}, {e: \"input\", name: \""+arr[i+1]+"\"}]},");
             }
+
         }
+        System.out.println("]}");
      }
 }
