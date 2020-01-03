@@ -198,22 +198,25 @@ public class A {
                     a+="\""+s+"\",";
                 }
                 a = a.substring(0,a.length()-1);
+                //请注明
                 if (arr[i].contains("$$$")){
                     String item = "";
+                    String display = "";
                     if (arr[i].contains("其他（请注明）")){
                         item = "其他（请注明）";
+                        display = ", style: {\"display\": \"none\"}";
                     }else if(arr[i].contains("有（请注明）")){
                         item = "有（请注明）";
                     }
                     System.out.println("{\n" +
-                            "\t\t\t\t\t\t\te: \"f1\", t: [{e: \"label\", t: \""+arr[i].substring(0,arr[i].indexOf("：单"))+"\"}, {e: \"select\", name: \""+arr[i+1]+"\", t: function (selectEle) {appendOption(selectEle, ["+a+"]);},\n" +
+                            "\t\t\t\t\t\t\te: \"f1\", style:{width:\"550px\"}, t: [{e: \"label\", t: \""+arr[i].substring(0,arr[i].indexOf("：单"))+"\"}, {e: \"select\", name: \""+arr[i+1]+"\", t: function (selectEle) {appendOption(selectEle, ["+a+"]);},\n" +
                             "\t\t\t\t\t\t\t\tevent: {\n" +
                             "\t\t\t\t\t\t\t\t\tchange: function (selectEle) {\n" +
                             "\t\t\t\t\t\t\t\t\t\tvar detail = $(selectEle.sender).parent().find(\"input\");\n" +
                             "\t\t\t\t\t\t\t\t\t\tif (selectEle.new_data."+arr[i+1]+" === \""+item+"\") {detail.css(\"display\", \"inline\");} else {detail.css(\"display\", \"none\");}\n" +
                             "\t\t\t\t\t\t\t\t\t}}},\n" +
-                            "\t\t\t\t\t\t\t{e: \"input\", name: \""+arr[i+1]+"_detail\", a: {\"placeholder\": \"请填入具体信息\"}, style: {\"display\": \"none\"}}]\n" +
-                            "\t\t\t\t\t\t},{e: \"f1\"},");
+                            "\t\t\t\t\t\t\t{e: \"input\", name: \""+arr[i+1]+"_detail\", a: {\"placeholder\": \"请填入具体信息\"}"+display+"}]\n" +
+                            "\t\t\t\t\t\t},");
                 }else {
                     System.out.println("{e: \"f1\", t: [{e: \"label\", t: \""+arr[i].substring(0,arr[i].indexOf("：单"))+"\"}, {e: \"select\", name: \""+arr[i+1]+"\",t: function (selectEle){appendOption(selectEle, ["+a+"]);}}]},");
 
