@@ -21,6 +21,10 @@ router.get('/jadeDemo', function (req, res, next) {
 	res.render('jade_demo', {title: 'jade_demo'});
 });
 
+router.get('/time', function (req, res, next) {
+	res.render('time', {title: ''});
+});
+
 router.get('/jsDemo', function (req, res, next) {
 	const demo = "demo";
 	res.render("js_demo", {title: demo});
