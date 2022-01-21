@@ -17,6 +17,6 @@
     "body-parser": "latest"
   },
   "devDependencies": {
-    "log4js": "^6.1.0"
+    "log4js": "^6.4.0"
   }
 }
